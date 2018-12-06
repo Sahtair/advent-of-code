@@ -9,11 +9,28 @@ https.get('https://adventofcode.com/2018/day/1/input',{
     console.log('headers:', res.headers);
     res.setEncoding('utf8')
     res.on('data', d => {
-        const numbers = d.split('\n');
+        const numbers = d.split('\n').filter(item => item);
         const frequency = numbers.reduce((sum, number) => {
             return sum + Number(number);
         }, 0);
-        console.log(frequency)
+
+        const frequencies = [];
+        let current_freq = 0;
+        let i = 0;
+        while (true) {
+            current_freq = current_freq + Number(numbers[i]);
+
+            if (frequencies.indexOf(current_freq) > -1){
+                
+                break;
+            }
+            frequencies.push(current_freq);
+            i++;
+            if (i === numbers.length) {
+                i = 0;
+            }
+        } 
+        console.log('got em', current_freq)
     });
 }).on('error', err => {
     console.log(err)
